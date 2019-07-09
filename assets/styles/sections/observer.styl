@@ -1,0 +1,127 @@
+.observer
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  &__sclera
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: BS * 200;
+    height: BS * 200;
+    background: rgba(245, 245, 245, 1);
+    border-radius: 50%;
+    overflow: hidden;
+    transition: height 1s ease-out;
+    animation: BLINK infinite 4.73189s
+    box-shadow: inset 0 0 BS*1 rgba(0,0,0,0.1);
+    // animation-delay: 2.1s, 480ms;
+    &:after
+      content: '';
+      position: absolute;
+      width: BS * 200;
+      height: BS * 200;
+      border-radius: 50%;
+      box-shadow: inset 0 0 BS*1 rgba(0,0,0,0.2);
+      background: radial-gradient(circle at bottom left, rgba(0,0,0,0.2), transparent 50%), radial-gradient(ellipse at 60% 5%, rgba(255,255,255,0.8), transparent 30%)
+    &:before
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+  &__iris
+    IrisColor = #ffd900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: BS * 110;
+    height: BS * 110;
+    background: conic-gradient(
+        transparent 3.5%, rgba(0,0,0,0.2) 4%, transparent 4.5%,
+        transparent 8.5%, rgba(0,0,0,0.3) 9%, transparent 9.5%,
+        transparent 13.5%, rgba(0,0,0,0.4) 14%, transparent 14.5%,
+        transparent 18.5%, rgba(0,0,0,0.3) 19%, transparent 19.5%,
+        transparent 23.5%, rgba(0,0,0,0.3) 24%, transparent 24.5%,
+        transparent 28.5%, rgba(0,0,0,0.2) 29%, transparent 29.5%,
+        transparent 33.5%, rgba(0,0,0,0.2) 34%, transparent 34.5%,
+        transparent 38.5%, rgba(0,0,0,0.3) 39%, transparent 39.5%,
+        transparent 43.5%, rgba(0,0,0,0.3) 44%, transparent 44.5%,
+        transparent 48.5%, rgba(0,0,0,0.4) 49%, transparent 49.5%,
+        transparent 53.5%, rgba(0,0,0,0.3) 54%, transparent 54.5%,
+        transparent 58.5%, rgba(0,0,0,0.3) 59%, transparent 59.5%,
+        transparent 63.5%, rgba(0,0,0,0.4) 64%, transparent 64.5%,
+        transparent 68.5%, rgba(0,0,0,0.3) 69%, transparent 69.5%,
+        transparent 73.5%, rgba(0,0,0,0.2) 74%, transparent 74.5%,
+        transparent 78.5%, rgba(0,0,0,0.3) 79%, transparent 79.5%,
+        transparent 83.5%, rgba(0,0,0,0.4) 84%, transparent 84.5%,
+        transparent 88.5%, rgba(0,0,0,0.3) 89%, transparent 89.5%,
+        transparent 93.5%, rgba(0,0,0,0.2) 94%, transparent 94.5%,
+        transparent 98.5%, rgba(0,0,0,0.3) 99%, transparent 99.5%
+    ), IrisColor;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: inset 0 0 BS*20 rgba(0,0,0,1);
+    &:after
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 BS*3 rgba(0,0,0,1);
+  &__pupil
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-block;
+    width: BS * 60;
+    height: BS * 60;
+    background: #444;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+    animation: infinite 7s PUPIL_FOCUS;
+    box-shadow: inset 0 0 BS*20 rgba(0,0,0,1);
+    &:after
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 BS*10 rgba(0,0,0,2);
+
+@keyframes BLINK {
+  90%{
+    height: BS * 200;
+  }
+  95%{
+    height: 0;
+  }
+  100%{
+    height: BS * 200;
+  }
+}
+
+@keyframes PUPIL_FOCUS {
+  90%{
+    width: BS * 57;
+    height: BS * 57;
+  }
+  95%{
+    width: BS * 63;
+    height: BS * 63;
+  }
+  100%{
+    width: BS * 57;
+    height: BS * 57;
+  }
+}
