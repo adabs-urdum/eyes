@@ -23,6 +23,7 @@ function Observer(initials){
     }
 
     this.bindEvents = () => {
+      window.addEventListener('resize', this.getEyePosition);
       window.addEventListener('mousemove', this.handleMouseMove);
     }
 
