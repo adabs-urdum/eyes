@@ -32,6 +32,7 @@
     "stylus": "latest",
     "browser-sync": "latest",
     "package.json": "latest",
-    "onchange": "latest"
+    "onchange": "latest",
+    "babel-polyfill": "latest"
   }
 }

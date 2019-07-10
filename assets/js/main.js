@@ -1,5 +1,7 @@
 'use strict';
 
+import "babel-polyfill";
+
 function Observer(initials){
 
   const observer = document.getElementsByClassName('observer')[0];
@@ -25,15 +27,30 @@ function Observer(initials){
     }
 
     this.getMousePosition = (e) => {
-      this.difference = {
-        x: e.clientX - this.eyeCenterX,
-        y: e.clientY - this.eyeCenterY
+
+      const starts = {
+        x: e.clientX,
+        y: e.clientY
+      };
+
+      if(e.clientX > this.eyeCenterX + threshold){
+        starts.x = this.eyeCenterX + threshold;
+      }
+      else if(e.clientX < this.eyeCenterX - threshold){
+        starts.x = this.eyeCenterX - threshold;
       }
 
-      this.differencePercentage = {
-        x: this.difference.x,
-        y: this.difference.y,
-      };
+      if(e.clientY > this.eyeCenterY + threshold){
+        starts.y = this.eyeCenterY + threshold;
+      }
+      else if(e.clientY < this.eyeCenterY - threshold){
+        starts.y = this.eyeCenterY - threshold;
+      }
+
+      this.difference = {
+        x: starts.x - this.eyeCenterX,
+        y: starts.y - this.eyeCenterY
+      }
 
     }
 
@@ -44,18 +61,24 @@ function Observer(initials){
     }
 
     this.setPupilOffset = () => {
-      let offsetX = maxMovePupil / 100 * this.differencePercentage.x - 50;
-      let offsetY = maxMovePupil / 100 * this.differencePercentage.y - 50;
+      let offsetX = maxMovePupil / 100 * this.difference.x - 50;
+      let offsetY = maxMovePupil / 100 * this.difference.y - 50;
 
       this.pupil.style.transform = 'translate(' + offsetX + '%, ' + offsetY + '%)';
     }
 
     this.setIrisOffset = () => {
-      let offsetX = maxMoveIris / 100 * this.differencePercentage.x;
-      let offsetY = maxMoveIris / 100 * this.differencePercentage.y;
-      const translate = 'translate(' + offsetX + '%, ' + offsetY + '%)';
-      let scaleX = maxScaleIris / 100 * this.differencePercentage.x > 0 ? 1 - maxScaleIris / 100 * this.differencePercentage.x : 1 - maxScaleIris / 100 * this.differencePercentage.x * -1;
-      let scaleY = maxScaleIris / 100 * this.differencePercentage.y > 0 ? 1 - maxScaleIris / 100 * this.differencePercentage.y : 1 - maxScaleIris / 100 * this.differencePercentage.y * -1;
+      let offsetX = maxMoveIris / 100 * this.difference.x;
+      let offsetY = maxMoveIris / 100 * this.difference.y;
+      if(offsetX > maxMoveIris){
+        offsetX = maxMoveIris;
+      }
+      if(offsetY > maxMoveIris){
+        offsetY = maxMoveIris;
+      }
+      const translate = 'translate(' + (offsetX - 50) + '%, ' + (offsetY - 50) + '%)';
+      let scaleX = maxScaleIris / 100 * this.difference.x > 0 ? 1 - maxScaleIris / 100 * this.difference.x : 1 - maxScaleIris / 100 * this.difference.x * -1;
+      let scaleY = maxScaleIris / 100 * this.difference.y > 0 ? 1 - maxScaleIris / 100 * this.difference.y : 1 - maxScaleIris / 100 * this.difference.y * -1;
       let scale = ' scaleX(' + scaleX + ')';
       scale += ' scaleY(' + scaleY + ')';
       this.iris.style.transform = translate + scale;
@@ -107,8 +130,8 @@ function Observer(initials){
 }
 
 Observer({
-  maxMoveIris: 55,
-  maxMovePupil: 15,
-  maxScaleIris: 0.13,
-  threshold: 100,
+  maxMoveIris: 30,
+  maxMovePupil: 10,
+  maxScaleIris: 0.11,
+  threshold: 110,
 });
