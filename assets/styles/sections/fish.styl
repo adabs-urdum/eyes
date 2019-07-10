@@ -4,7 +4,9 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  top: 25%;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
   background: darken(IrisColor, 50%);
   background-image: radial-gradient(circle at top center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 1));
   width: BS * 800;
@@ -12,6 +14,7 @@
   border-radius: 50% 50% 30% 30%;
   box-shadow: inset 0 0 BS*20 rgba(255,255,255,0.8);
   overflow: hidden;
+  z-index: 5;
   &:after
     content: '';
     position: absolute;
@@ -28,7 +31,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 40% 40% 10% 10%;
+    border-radius: 50% 50% 30% 30%;
     background-image: radial-gradient(circle at 60% 10%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 40%);
   &__eyes
     display: flex;
@@ -58,6 +61,76 @@
   &__gills_right
     width: BS * 230;
     transform: skewX(20deg);
+  &__donut
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 80%;
+    height: BS * 90;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.8), #FFE44D 90%, rgba(0,0,0,1));
+    box-shadow: 0 0 BS*20 rgba(255,255,255,1);
+    border-radius: 50%;
+  &__tentacles
+    display: flex;
+    transform: translateY(50%);
+    z-index: 4;
+  &__tentacle
+    position: relative;
+    width: BS * 50;
+    height: BS * 500;
+    box-shadow: inset 0 0 BS*10 rgba(255,255,255,1);
+    border-radius: BS*20;
+    background: linear-gradient(transparent,darken(IrisColor, 90%));
+    margin: 0 BS*10;
+    animation: LEG_BUMBLING infinite;
+    &:before
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: BS * 50;
+      height: BS * 200;
+      border-radius: BS * 20;
+      background: radial-gradient(ellipse at right bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.2), rgba(255,255,255,0) 50%);
+    &:after
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      border-radius: BS*20
+      background: linear-gradient(rgba(0,0,0,1), rgba(0,0,0,0) 50%);
+    &:nth-child(1)
+      animation-duration: 8s
+      top: BS * 30;
+    &:nth-child(2)
+      animation-duration: 7.5s
+      top: BS * 10;
+    &:nth-child(3)
+      animation-duration: 8.5s
+      top: BS * 40;
+    &:nth-child(4)
+      animation-duration: 8.25s
+      top: BS * 20;
+    &:nth-child(5)
+      animation-duration: 7.75s
+      top: BS * 50;
+
+
+@keyframes LEG_BUMBLING {
+  0%{
+    transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+  }
+  50%{
+    transform: translate(0, BS*50) scale(1.15) rotateX(50deg);
+  }
+  100%{
+    transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+  }
+}
+
 
 @keyframes BREATH {
   80%{
@@ -77,3 +150,87 @@
     background: linear-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.8) 20%);
   }
 }
+
+
+@media BreakpointMAX
+  .fish
+    width: 800px;
+    height: 600px;
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.8);
+    &__eyes
+      margin: 0 auto 60px;
+    &__gills
+      margin-bottom: 65px;
+    &__gill
+      height: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.9);
+      animation: BREATH_MAX 8s infinite;
+    &__gills_left
+      width: 230px;
+    &__gills_right
+      width: 230px;
+    &__donut
+      height: 90px;
+      box-shadow: 0 0 20px rgba(255,255,255,1);
+    &__tentacle
+      width: 50px;
+      height: 500px;
+      box-shadow: inset 0 0 5px rgba(255,255,255,1);
+      border-radius: 20px;
+      margin: 0 10px;
+      animation: LEG_BUMBLING_MAX infinite;
+      overflow: hidden;
+      &:before
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 200px;
+        border-radius: 20px;
+        background: radial-gradient(ellipse at right bottom, rgba(255,255,255,0.2), rgba(255,255,255,0) 50%);
+      &:after
+        border-radius: 20px
+      &:nth-child(1)
+        top: 30px;
+      &:nth-child(2)
+        top: 10px;
+      &:nth-child(3)
+        top: 40px;
+      &:nth-child(4)
+        top: 20px;
+      &:nth-child(5)
+        top: 50px;
+
+
+  @keyframes LEG_BUMBLING_MAX {
+    0%{
+      transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+    }
+    50%{
+      transform: translate(0, 50px) scale(1.15) rotateX(50deg);
+    }
+    100%{
+      transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+    }
+  }
+
+
+  @keyframes BREATH_MAX {
+    80%{
+      height: 10px;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.8) 20%);
+    }
+    87%{
+      height: 17px;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.8) 20%);
+    }
+    90%{
+      height: 5px;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.8) 20%);
+    }
+    100%{
+      height: 10px;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.8) 20%);
+    }
+  }
