@@ -34,8 +34,8 @@
     position: absolute;
     left: 50%;
     top: 40%;
-    width: BS * 800;
-    height: BS * 600;
+    width: BS * 550;
+    height: BS * 500;
     transform: translate(-50%, -50%);
   &__eyes
     display: flex;
@@ -46,13 +46,13 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 30%;
-    margin-bottom: BS * 65;
+    height: 20%;
+    margin-bottom: BS * 55;
   &__gill
     width: 100%;
     height: BS * 10;
-    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 90%) 20%);
-    box-shadow: 0 0 BS*5 rgba(0,0,0,0.9);
+    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
+    box-shadow: inset 0 0 BS*7 rgba(0,0,0,0.9);
     animation: BREATH 5.5s infinite;
     border-radius: BS * 5;
     for num in (1..6)
@@ -64,11 +64,11 @@
     justify-content: space-between;
     height: 100%;
   &__gills_left
-    width: BS * 230;
-    transform: skewX(-20deg);
+    width: BS * 150;
+    transform: skewX(-20deg) rotate(5deg);
   &__gills_right
-    width: BS * 230;
-    transform: skewX(20deg);
+    width: BS * 150;
+    transform: skewX(20deg) rotate(-5deg);
   &__donut
     position: absolute;
     top: 0;
@@ -110,9 +110,9 @@
   &__tentacle
     position: relative;
     width: BS * 50;
-    height: BS * 600;
+    height: BS * 250;
     box-shadow: inset 0 0 BS*10 rgba(255,255,255,0.6);
-    border-radius: BS*20;
+    border-radius: BS*25;
     background: linear-gradient(transparent,darken(IrisColor, 90%));
     margin: 0 BS*10;
     animation: LEG_BUMBLING infinite;
@@ -154,13 +154,13 @@
 
 @keyframes LEG_BUMBLING {
   0%{
-    transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+    transform: translate(0, 0) rotate(0) scale(1);
   }
   50%{
-    transform: translate(0, BS*50) scale(1.15) rotateX(50deg);
+    transform: translate(0, BS*50) scale(1.15);
   }
   100%{
-    transform: translate(0, 0) rotate(0) scale(1) rotateX(0deg);
+    transform: translate(0, 0) rotate(0) scale(1);
   }
 }
 
@@ -168,19 +168,19 @@
 @keyframes BREATH {
   80%{
     height: BS * 10;
-    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 90%) 20%);
+    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
   }
   87%{
     height: BS * 20;
-    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 90%) 20%);
+    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
   }
   90%{
     height: BS * 5;
-    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 90%) 20%);
+    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
   }
   100%{
     height: BS * 10;
-    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 90%) 20%);
+    background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
   }
 }
 

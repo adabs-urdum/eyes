@@ -131,8 +131,8 @@ function Observer(initials){
 }
 
 Observer({
-  maxMoveIris: 30,
+  maxMoveIris: 18,
   maxMovePupil: 10,
-  maxScaleIris: 0.11,
+  maxScaleIris: 0.10,
   threshold: 110,
 });
