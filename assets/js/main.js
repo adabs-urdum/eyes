@@ -6,6 +6,7 @@ function Observer(initials){
 
   const observer = document.getElementsByClassName('observer')[0];
   const eyes = observer.getElementsByClassName('observer__sclera');
+  const bait = document.getElementById('observerBait');
   const maxMoveIris = initials.maxMoveIris;
   const maxMovePupil = initials.maxMovePupil;
   const maxScaleIris = initials.maxScaleIris;
@@ -14,6 +15,14 @@ function Observer(initials){
   function Eye(sclera, i){
 
     this.constructor = (sclera, i) => {
+      this.moveEyes = true;
+      this.squintingEyes = false;
+
+      this.difference = {
+        x: 0,
+        y: 0
+      }
+
       this.sclera = sclera;
       this.iris = sclera.getElementsByClassName('observer__iris')[0];
       this.pupil = this.iris.getElementsByClassName('observer__pupil')[0];
@@ -25,6 +34,44 @@ function Observer(initials){
     this.bindEvents = () => {
       window.addEventListener('resize', this.getEyePosition);
       window.addEventListener('mousemove', this.handleMouseMove);
+      observer.addEventListener('click', this.focusEyes);
+    }
+
+    this.focusEyes = (e) => {
+
+      if(!this.moveEyes && this.squintingEyes){
+        setTimeout(() => {
+          sclera.classList.add('observer__sclera--squint');
+        }, 300);
+        this.sclera.classList.remove('observer__sclera--runAnimation');
+      }
+      else{
+        this.sclera.classList.remove('observer__sclera--squint');
+        let sclera = this.sclera;
+        setTimeout(() => {
+          sclera.classList.add('observer__sclera--runAnimation');
+        }, 1000);
+      }
+
+      this.difference.x = 0;
+      this.difference.y = 0;
+
+      if(!this.moveEyes && this.squintingEyes){
+        this.moveEyes = false;
+        this.squintingEyes = false;
+      }
+      else if(this.moveEyes && !this.squintingEyes){
+        this.moveEyes = false;
+        this.squintingEyes = true;
+      }
+      else{
+        this.getMousePosition(e);
+        this.moveEyes = true;
+        this.squintingEyes = false;
+      }
+
+      this.setIrisOffset();
+      this.setPupilOffset();
     }
 
     this.getMousePosition = (e) => {
@@ -57,8 +104,12 @@ function Observer(initials){
 
     this.handleMouseMove = (e) => {
       this.getMousePosition(e);
-      this.setIrisOffset();
-      this.setPupilOffset();
+
+      if(this.moveEyes){
+        this.setIrisOffset();
+        this.setPupilOffset();
+      }
+
     }
 
     this.setPupilOffset = () => {
@@ -97,6 +148,7 @@ function Observer(initials){
 
   let windowWidth,
       windowHeight,
+      baitToggleI,
       i;
 
   function init(){
@@ -115,6 +167,12 @@ function Observer(initials){
 
   function bindEvents(){
     window.addEventListener('resize', handleWindowResize);
+    observer.addEventListener('mousemove', handleMouseMove);
+  }
+
+  function handleMouseMove(e){
+    bait.style.left = e.clientX + 'px';
+    bait.style.top = e.clientY + 'px';
   }
 
   function handleWindowResize(){

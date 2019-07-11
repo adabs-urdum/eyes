@@ -5,7 +5,8 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at center, darken(#0F00B3, 90%) 45%, darken(#0F00B3, 85%) 80%)
+  background: radial-gradient(circle at center, darken(#0F00B3, 90%) 45%, darken(#0F00B3, 85%) 80%);
+  cursor: none;
   &__lid
     position: relative;
     width: BS * 150;
@@ -24,13 +25,17 @@
     justify-content: center;
     align-items: center;
     width: BS * 140;
-    height: BS * 130;
+    height: BS * 140;
     background: #fff5f5;
     border-radius: 50%;
     overflow: hidden;
-    animation: BLINK infinite 6s;
     animation-delay: 0.3s;
     box-shadow: inset 0 0 BS*30 rgba(0,0,0,1);
+    transition: height 1s;
+    &--runAnimation
+      animation: BLINK infinite 6s;
+    &--squint
+      height: BS * 40;
     &:after
       content: '';
       position: absolute;
@@ -113,6 +118,41 @@
       height: 100%;
       border-radius: 50%;
       box-shadow: 0 0 BS*10 rgba(0,0,0,2);
+  &__bait
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: BS * 100;
+    height: BS * 100;
+    background: radial-gradient(rgba(255,255,255,1) 5%, rgba(255,255,255,0) 25%);
+    z-index: 9;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    animation: infinite 3s BLINKING_LIGHT;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center;
+    &--hidden
+      opacity: 0;
+      animation: none;
+      transform: translate(-50%, -50%) scale(0);
+
+@keyframes BLINKING_LIGHT
+  0%{
+    transform: scale(1) translate(-50%, -50%);
+  }
+  25%{
+    transform: scale(0.9) translate(-50%, -50%);
+  }
+  50%{
+    transform: scale(1.1) translate(-50%, -50%);
+  }
+  75%{
+    transform: scale(0.9) translate(-50%, -50%);
+  }
+  100%{
+    transition: scale(1) translate(-50%, -50%);
+  }
 
 @keyframes BLINK {
   87%{
