@@ -23,6 +23,7 @@ function Observer(initials){
         y: 0
       }
 
+      this.windowScrollTop = window.scrollY;
       this.sclera = sclera;
       this.iris = sclera.getElementsByClassName('observer__iris')[0];
       this.pupil = this.iris.getElementsByClassName('observer__pupil')[0];
@@ -34,6 +35,7 @@ function Observer(initials){
     this.bindEvents = () => {
       window.addEventListener('resize', this.getEyePosition);
       window.addEventListener('mousemove', this.handleMouseMove);
+      window.addEventListener('touchmove', this.handleTouchMove);
       observer.addEventListener('click', this.focusEyes);
     }
 
@@ -76,9 +78,11 @@ function Observer(initials){
 
     this.getMousePosition = (e) => {
 
+      const clientY = e.clientY + this.windowScrollTop;
+
       const starts = {
         x: e.clientX,
-        y: e.clientY
+        y: clientY
       };
 
       if(e.clientX > this.eyeCenterX + threshold){
@@ -88,10 +92,10 @@ function Observer(initials){
         starts.x = this.eyeCenterX - threshold;
       }
 
-      if(e.clientY > this.eyeCenterY + threshold){
+      if(clientY > this.eyeCenterY + threshold){
         starts.y = this.eyeCenterY + threshold;
       }
-      else if(e.clientY < this.eyeCenterY - threshold){
+      else if(clientY < this.eyeCenterY - threshold){
         starts.y = this.eyeCenterY - threshold;
       }
 
@@ -102,10 +106,52 @@ function Observer(initials){
 
     }
 
+    this.getTouchPosition = (e) => {
+
+      const clientY = e.touches[0].clientY + this.windowScrollTop;
+
+      const starts = {
+        x: e.touches[0].clientX,
+        y: clientY
+      };
+
+      if(e.clientX > this.eyeCenterX + threshold){
+        starts.x = this.eyeCenterX + threshold;
+      }
+      else if(e.clientX < this.eyeCenterX - threshold){
+        starts.x = this.eyeCenterX - threshold;
+      }
+
+      if(clientY > this.eyeCenterY + threshold){
+        starts.y = this.eyeCenterY + threshold;
+      }
+      else if(clientY < this.eyeCenterY - threshold){
+        starts.y = this.eyeCenterY - threshold;
+      }
+
+      this.difference = {
+        x: starts.x - this.eyeCenterX,
+        y: starts.y - this.eyeCenterY
+      }
+
+    }
+
+    this.handleTouchMove = (e) => {
+      this.getEyePosition(e);
+      this.getTouchPosition(e);
+
+      if(this.moveEyes && e.touches[0].clientY + window.scrollY <= windowHeight){
+        this.setIrisOffset();
+        this.setPupilOffset();
+      }
+
+    }
+
     this.handleMouseMove = (e) => {
+      this.getEyePosition(e);
       this.getMousePosition(e);
 
-      if(this.moveEyes){
+      if(this.moveEyes && e.clientY + window.scrollY <= windowHeight){
         this.setIrisOffset();
         this.setPupilOffset();
       }
@@ -139,7 +185,7 @@ function Observer(initials){
     this.getEyePosition = () => {
       const eyeBox = this.sclera.getBoundingClientRect();
       this.eyeCenterX = eyeBox.left + eyeBox.width / 2;
-      this.eyeCenterY = eyeBox.top + eyeBox.height / 2;
+      this.eyeCenterY = this.windowScrollTop + eyeBox.top + eyeBox.height / 2;
     }
 
     this.constructor(sclera);
@@ -167,12 +213,27 @@ function Observer(initials){
 
   function bindEvents(){
     window.addEventListener('resize', handleWindowResize);
+    window.addEventListener('scroll', handleScroll);
     observer.addEventListener('mousemove', handleMouseMove);
+    observer.addEventListener('touchmove', handleTouchMove);
+  }
+
+  function handleScroll(e){
+    this.windowScrollTop = window.scrollY;
   }
 
   function handleMouseMove(e){
+    this.windowScrollTop = window.scrollY;
     bait.style.left = e.clientX + 'px';
-    bait.style.top = e.clientY + 'px';
+    const top = e.clientY + this.windowScrollTop < windowHeight ? e.clientY + this.windowScrollTop : windowHeight;
+    bait.style.top = top + 'px';
+  }
+
+  function handleTouchMove(e){
+    this.windowScrollTop = window.scrollY;
+    bait.style.left = e.touches[0].clientX + 'px';
+    const top = e.touches[0].clientY + this.windowScrollTop < windowHeight ? e.touches[0].clientY + this.windowScrollTop : windowHeight;
+    bait.style.top = top + 'px';
   }
 
   function handleWindowResize(){

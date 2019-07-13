@@ -1,9 +1,11 @@
 html
-  font-family 'Gilroy', sans-serif
+  font-family 'Viga', serif
   font-weight 200
   font-size "%spx" % (BaseRemSize)
   line-height 120%
-  color Black
+  color White
+  overflow-x: hidden;
+  background: darken(#0F00B3, 85%);
 
 h1, h2, h3, h4, h5, h6
   margin 0
@@ -36,14 +38,26 @@ ul, li
   list-style none
 
 a
+  position: relative;
   display inline-block
   text-decoration none
   color inherit
   transition transform 0.3s ease-out
   &:hover
     transform scale(1.03)
+    &:after
+      background: rgba(255,255,255,1)
   &:active
     transform scale(0.96)
+  &:after
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: BS * 5;
+    background: rgba(255,255,255,0.5)
+    transition: background 0.3s ease-out
 
 img, canvas
   display block

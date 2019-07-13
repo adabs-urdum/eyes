@@ -185,3 +185,46 @@
     background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
   }
 }
+
+
+@media BreakpointM
+  .fish
+    &__wrapper
+      width: BS * 850;
+      height: BS * 800;
+    &__gills_wrapper
+      margin-bottom: BS * 120;
+    &__gills
+      width: BS * 220;
+    &__gill
+      height: BS * 20;
+      animation: BREATH-M 5.5s infinite;
+    &__eyes
+      margin: 0 auto BS*120;
+    &__tentacle
+      width: BS * 60;
+      height: BS * 400;
+      box-shadow: inset 0 0 BS*15 rgba(255,255,255,0.6);
+      border-radius: BS*30;
+      margin: 0 BS*20;
+      &:before
+        width: BS * 60;
+        height: BS * 400;
+    @keyframes BREATH-M {
+      80%{
+        height: BS * 20;
+        background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
+      }
+      87%{
+        height: BS * 30;
+        background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
+      }
+      90%{
+        height: BS * 15;
+        background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
+      }
+      100%{
+        height: BS * 20;
+        background: linear-gradient(rgba(255,255,255,0.5), darken(IrisColor, 95%) 20%);
+      }
+    }

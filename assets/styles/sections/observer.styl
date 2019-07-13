@@ -1,3 +1,5 @@
+TitleFontSize = 12.32vh;
+
 .observer
   display: flex;
   flex-wrap: wrap;
@@ -7,6 +9,26 @@
   height: 100vh;
   background: radial-gradient(circle at center, darken(#0F00B3, 90%) 45%, darken(#0F00B3, 85%) 80%);
   cursor: none;
+  overflow: hidden;
+  &__title
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    color: rgba(255,255,255,0.1);
+    text-transform: uppercase;
+    font-size: TitleFontSize;
+    margin-bottom: TitleFontSize * -1.7;
+    line-height: TitleFontSize * 0.8;
+    white-space: nowrap;
+    transition: color 1s ease-out;
+    z-index: 11;
+    &:hover
+      color: rgba(255, 255, 255, 0.5);
+  &__subtitle
+    font-size: 'calc(%s - 3.55vh)' % (TitleFontSize);
+    text-transform: none;
   &__lid
     position: relative;
     width: BS * 150;
@@ -183,3 +205,66 @@
     height: BS * 40;
   }
 }
+
+
+@media BreakpointM
+  .observer
+    &__lid
+      width: BS * 250;
+      height: BS * 250;
+    &__sclera
+      width: BS * 240;
+      height: BS * 240;
+      &--runAnimation
+        animation: BLINK-M infinite 6s;
+      &:after
+        width: BS * 250;
+        height: BS * 250;
+    &__iris
+      width: BS * 140;
+      height: BS * 140;
+    &__pupil
+      width: BS * 60;
+      height: BS * 60;
+      animation: infinite 3.5s PUPIL_FOCUS-M;
+    &__bait
+      width: BS * 200;
+      height: BS * 200;
+    @keyframes BLINK-M {
+      87%{
+        height: BS * 240;
+      }
+      92%{
+        height: BS * 5;
+      }
+      95%{
+        height: BS * 5;
+      }
+      100%{
+        height: BS * 240;
+      }
+    }
+    @keyframes PUPIL_FOCUS-M {
+      90%{
+        width: BS * 60;
+        height: BS * 60;
+      }
+      95%{
+        width: BS * 66;
+        height: BS * 66;
+      }
+      100%{
+        width: BS * 60;
+        height: BS * 60;
+      }
+    }
+
+@media BreakpointXS
+  .observer
+    TitleFontSizeXS = 8vh;
+    &__title
+      font-size: TitleFontSizeXS;
+      margin-bottom: TitleFontSizeXS * -1.7;
+      line-height: TitleFontSizeXS * 0.8;
+    &__subtitle
+      font-size: 'calc(%s - 4vh)' % (TitleFontSizeXS);
